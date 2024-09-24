@@ -1,0 +1,15 @@
+div.chapter-controls {
+  display: flex;
+  justify-content: center;
+  margin: 1rem auto;
+
+  h2 {
+    margin: 0;
+  }
+
+  button {
+    background: white;
+    border: 1px solid grey;
+    border-radius: 5px;
+  }
+}

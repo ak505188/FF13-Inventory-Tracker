@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { COMPONENTS, COMPONENTS_BY_CHAPTER } from '../lib/enums';
-import ComponentSelection from './ComponentSelection';
+import ComponentSelection from './Component/Component';
 import Inventory from './Inventory';
+import './App.scss';
 
 const App = () => {
   const [inventory, setInventory] = useState([]);
@@ -65,14 +65,14 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div class="app">
       <Inventory
         inventory={inventory}
         addItem={addItem}
         removeItem={removeItem}
         subtractItem={subtractItem}
       />
-      <ComponentSelection addItem={addItem} components={COMPONENTS_BY_CHAPTER[0]}/>
+      <ComponentSelection/>
     </div>
   )
 }
