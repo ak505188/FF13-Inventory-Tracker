@@ -1,0 +1,46 @@
+div.inventory {
+  header {
+    h2 {
+      display: inline;
+    }
+    span {
+      margin-left: auto;
+
+      button {
+        height: 100%;
+        padding: 0 0.5rem;
+        margin-left: 0.25rem;
+      }
+    }
+  }
+  ol {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    counter-reset: inventory-counter;
+    padding: 0;
+    gap: 0.5rem;
+    list-style: none;
+    li {
+      border: 1px solid grey;
+      border-radius: 5px;
+      padding: 1rem;
+      box-sizing: border-box;
+      counter-increment: inventory-counter;
+      display: flex;
+      width: 100%;
+      cursor: grab;
+
+      &::before {
+        content: counter(inventory-counter) ". ";
+      }
+      span {
+        margin-right: auto;
+      }
+      button {
+        width: 1.5rem;
+        margin: 0 .125rem;
+        cursor: pointer;
+      }
+    }
+  }
+}

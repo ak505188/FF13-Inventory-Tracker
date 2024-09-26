@@ -9,15 +9,34 @@ export const inventorySlice = createSlice({
     add: (state, action) => {
       state.value = addItem(state.value, action.payload.name, action.payload.amount);
     },
-    subtract: (state, action) => {
-      state.value = subtractItem(state.value, action.payload.name, action.payload.amount);
+    move: (state, action) => {
+      const { from, to } = action.payload;
+      const inventory = state.value;
+      if (from > to) {
+        state.value = [
+          ...inventory.slice(0, to),
+          inventory[from],
+          ...inventory.slice(to, from),
+          ...inventory.slice(from + 1)
+        ];
+      } else if (from < to) {
+        state.value = [
+          ...inventory.slice(0, from),
+          ...inventory.slice(from + 1, to + 1),
+          inventory[from],
+          ...inventory.slice(to + 1)
+        ]
+      }
     },
     remove: (state, action) => {
       state.value = removeItem(state.value, action.payload.name);
     },
     reset: state => {
       state.value = [];
-    }
+    },
+    subtract: (state, action) => {
+      state.value = subtractItem(state.value, action.payload.name, action.payload.amount);
+    },
   }
 })
 
@@ -75,6 +94,6 @@ const removeItem = (inventory, name) => {
 }
 
 // Action creators are generated for each case reducer function
-export const { add, subtract, remove, reset } = inventorySlice.actions
+export const { add, move, remove, reset, subtract } = inventorySlice.actions
 
 export default inventorySlice.reducer

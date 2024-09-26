@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
+import Chapter from '../Chapter/Chapter';
 import { add } from '../../store/inventory';
 import { COMPONENTS_BY_CHAPTER } from '../../lib/enums';
+import './Component.scss';
 
 const ComponentList = () => {
   const chapter = useSelector(state => state.chapter.value);
@@ -19,8 +21,11 @@ const ComponentList = () => {
   });
   return (
     <div>
-      <h2>Component Selection</h2>
-      <ul>
+      <header>
+        <h2>Component Selection</h2>
+        <Chapter/>
+      </header>
+      <ul className="component-selection">
         {buttons}
       </ul>
     </div>

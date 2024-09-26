@@ -5,14 +5,12 @@ import './Chapter.scss';
 
 const ChapterControls = () => {
   const name = useSelector(state => {
-    console.log(state);
     return state.chapter.name
   });
-  console.log(name);
   const dispatch = useDispatch();
 
   return (
-    <div class="chapter-controls">
+    <div className="chapter-controls">
       <button onClick={() => dispatch(decrement())}>
         &lt;
       </button>

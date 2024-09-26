@@ -1,14 +1,13 @@
-import Inventory from './components/App';
-import Chapter from './components/Chapter/Chapter';
-import Controls from './components/Controls';
-import './App.css';
+import Inventory from './components/Inventory/Inventory';
+import ComponentSelection from './components/Component/Component';
 
 function App() {
   return (
     <div className="App">
-      <Controls/>
-      <Chapter/>
-      <Inventory/>
+      <div className="app">
+        <Inventory/>
+        <ComponentSelection/>
+      </div>
     </div>
   );
 }
