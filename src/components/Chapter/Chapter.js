@@ -11,12 +11,12 @@ const ChapterControls = () => {
 
   return (
     <div className="chapter-controls">
+      <h2>{name} Components</h2>
       <button onClick={() => dispatch(decrement())}>
-        &lt;
+        Prev
       </button>
-      <h2>{name}</h2>
       <button onClick={() => dispatch(increment())}>
-        &gt;
+        Next
       </button>
     </div>
   );

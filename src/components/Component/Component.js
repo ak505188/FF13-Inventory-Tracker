@@ -22,7 +22,6 @@ const ComponentList = () => {
   return (
     <div>
       <header>
-        <h2>Component Selection</h2>
         <Chapter/>
       </header>
       <ul className="component-selection">
