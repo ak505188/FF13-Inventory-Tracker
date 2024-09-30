@@ -1,0 +1,49 @@
+:root {
+  --color-primary: #eeeeee;
+  --color-primary-variant: blue;
+  --color-secondary: #aaaaaa;
+  --color-secondary-variant: ;
+  --color-surface: #222222;
+  --color-error: #b00020;
+}
+
+div.App {
+  background: #111111;
+  color: var(--color-primary);
+  min-width: 100vw;
+  min-height: 100vh;
+  font-size: 16px;
+  display: flex;
+}
+
+div.app {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+button {
+  border: 1px solid var(--color-secondary);
+  border-radius: 5px;
+  background: var(--color-primary);
+}
+
+.container {
+  background: var(--color-surface);
+  display: flex;
+  border: 1px solid var(--color-secondary);
+  border-radius: 5px;
+  flex-direction: column;
+  padding: 1rem;
+  flex: 1;
+}
+
+[draggable="true"] {
+  cursor: grab;
+}
+
+h2 {
+  font-size: 1.125rem;
+  line-height: 1.125rem;
+}

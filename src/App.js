@@ -1,13 +1,9 @@
-import Inventory from './components/Inventory/Inventory';
-import ComponentSelection from './components/Component/Component';
+import Layout from './components/Layout/Layout.js'
 
 function App() {
   return (
     <div className="App">
-      <div className="app">
-        <Inventory/>
-        <ComponentSelection/>
-      </div>
+      <Layout/>
     </div>
   );
 }

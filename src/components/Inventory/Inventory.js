@@ -2,6 +2,7 @@ import { useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import Button from '../Button';
 import { add, move, remove, reset as resetInventory, subtract } from '../../store/inventory';
 import { reset as resetChapter } from '../../store/chapter';
 import './Inventory.scss';
@@ -30,13 +31,13 @@ const Inventory = () => {
   }, [])
 
   return (
-    <div className="inventory">
+    <div className="inventory container">
       <header>
         <h2>Inventory
-        <span>
-          <button onClick={clear}>Clear</button>
-          <button onClick={reset}>Reset</button>
-        </span>
+          <span>
+            <Button onClick={clear}>Clear</Button>
+            <Button onClick={reset}>Reset</Button>
+          </span>
         </h2>
       </header>
       <DndProvider backend={HTML5Backend}>
@@ -115,10 +116,10 @@ const InventoryItem = (props) => {
 
   return (
     <li ref={ref} style={{ style }} draggable={true} data-handler-id={handlerId}>
-      <span>{item.name}: {item.amount}</span>
-      <button onClick={add}>+</button>
-      <button onClick={subtract}>-</button>
-      <button onClick={remove}>x</button>
+      <span>{index+1}: {item.name} - {item.amount}</span>
+      <Button onClick={add}>+</Button>
+      <Button onClick={subtract}>-</Button>
+      <Button onClick={remove}>x</Button>
     </li>
   );
 }

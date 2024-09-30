@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { decrement, increment } from '../../store/chapter';
+import Button from '../Button/';
 
 import './Chapter.scss';
 
@@ -11,13 +12,15 @@ const ChapterControls = () => {
 
   return (
     <div className="chapter-controls">
-      <h2>{name} Components</h2>
-      <button onClick={() => dispatch(decrement())}>
-        Prev
-      </button>
-      <button onClick={() => dispatch(increment())}>
-        Next
-      </button>
+      <h2>{name}</h2>
+      <span>
+        <Button onClick={() => dispatch(decrement())}>
+          Prev
+        </Button>
+        <Button onClick={() => dispatch(increment())}>
+          Next
+        </Button>
+      </span>
     </div>
   );
 }

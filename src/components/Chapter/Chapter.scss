@@ -1,9 +1,12 @@
 div.chapter-controls {
   display: flex;
-  justify-content: center;
 
   h2 {
     margin: 0;
+  }
+
+  span {
+    margin-left: auto;
   }
 
   button {
