@@ -40,7 +40,7 @@ export const inventorySlice = createSlice({
   }
 })
 
-const findItemSlot = (inventory, name) => inventory.findIndex(item => item && item.name == name);
+const findItemSlot = (inventory, name) => inventory.findIndex(item => item && item.name === name);
 const getItemBySlot = (inventory, slot) => inventory[slot];
 const getFirstAvailableSlot = (inventory) => inventory.findIndex(i => i == null);
 

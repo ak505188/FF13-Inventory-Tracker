@@ -24,7 +24,6 @@ export const COMPONENTS = {
   TURBOJET: 'Turbojet',
   SUPERCONDUCTOR: 'Superconductor',
   INCENTIVE_CHIP: 'Incentive Chip',
-  TURBOJET: 'Turbojet',
   ABOMINABLE_WING: 'Abominable Wing',
   URANINITE: 'Uranitite',
   GYROSCOPE: 'Gyroscope',

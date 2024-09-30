@@ -10,7 +10,7 @@ import './Inventory.scss';
 const Inventory = () => {
   const inventory = useSelector(state => state.inventory.value);
   const dispatch = useDispatch();
-  const moveCard = useCallback(({ from, to }) => dispatch(move({ from, to })))
+  const moveCard = useCallback(({ from, to }) => dispatch(move({ from, to })), [dispatch])
   const clear = () => dispatch(resetInventory())
   const reset = () => {
     dispatch(resetChapter())
@@ -28,7 +28,7 @@ const Inventory = () => {
         subtract={() => dispatch(subtract({ name: item.name, amount: 1 }))}
       />
     )
-  }, [])
+  }, [dispatch, moveCard])
 
   return (
     <div className="inventory container">
