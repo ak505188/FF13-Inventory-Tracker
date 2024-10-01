@@ -9,6 +9,7 @@ import './Inventory.scss';
 
 const Inventory = () => {
   const inventory = useSelector(state => state.inventory.value);
+  const gil = useSelector(state => state.inventory.gil);
   const dispatch = useDispatch();
   const moveCard = useCallback(({ from, to }) => dispatch(move({ from, to })), [dispatch])
   const clear = () => dispatch(resetInventory())
@@ -33,7 +34,7 @@ const Inventory = () => {
   return (
     <div className="inventory container">
       <header>
-        <h2>Inventory
+        <h2>Inventory: {gil} gil
           <span>
             <Button onClick={clear}>Clear</Button>
             <Button onClick={reset}>Reset</Button>
@@ -116,7 +117,7 @@ const InventoryItem = (props) => {
 
   return (
     <li ref={ref} style={{ style }} draggable={true} data-handler-id={handlerId}>
-      <span>{index+1}: {item.name} - {item.amount}</span>
+      <span>{item.amount} {item.name}</span>
       <Button onClick={add}>+</Button>
       <Button onClick={subtract}>-</Button>
       <Button onClick={remove}>x</Button>

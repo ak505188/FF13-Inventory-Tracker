@@ -1,18 +1,38 @@
-ul.component-selection {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: .5rem;
-  list-style-type: none;
-  padding: 0;
+div.component.container {
+  ul.component-selection {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .5rem;
+    list-style-type: none;
+    padding: 0;
 
-  li {
-    width: 100%;
-
-    button {
+    li {
       width: 100%;
-      padding: 1rem;
-      font-size: 1rem;
-      background: var(--color-primary);
+      text-wrap: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      button {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1rem;
+        background: var(--color-primary);
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+  }
+  @media (max-width: 800px) {
+    padding: .25rem;
+    ul.component-selection {
+      margin: .25rem 0;
+      gap: .125rem;
+      li {
+        button {
+          padding: .125rem;
+        }
+      }
     }
   }
 }

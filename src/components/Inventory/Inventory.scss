@@ -1,4 +1,5 @@
 div.inventory {
+  overflow: hidden;
   header {
     h2 {
       display: flex;
@@ -15,12 +16,23 @@ div.inventory {
   }
 
   ol {
+    // https://css-tricks.com/an-auto-filling-css-grid-with-max-columns/
+    --grid-layout-gap: .5rem;
+    --grid-column-count: 2;
+    --grid-item-min-width: 200px;
+
+    // Calculated values.
+    --gap-count: calc(var(--grid-column-count) - 1);
+    --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+    --grid-item-max-width: calc((100% - var(--total-gap-width)) / var(--grid-column-count));
+
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    counter-reset: inventory-counter;
+    grid-template-columns: repeat(auto-fill, minmax(max(var(--grid-item-min-width), var(--grid-item-max-width)), 1fr));
+    grid-gap: var(--grid-layout-gap);
     padding: 0;
-    gap: 0.5rem;
     list-style: none;
+    overflow-y: scroll;
+
     li {
       background: var(--color-primary);
       color: var(--color-surface);
@@ -33,11 +45,27 @@ div.inventory {
 
       span {
         margin-right: auto;
+        overflow: hidden;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
       }
 
       button {
         width: 1.5rem;
         margin-left: .25rem;
+      }
+    }
+
+  }
+
+  @media (max-width: 800px) {
+    padding: .25rem;
+    ol {
+      --grid-layout-gap: .125rem;
+      margin: .25rem 0;
+
+      li {
+        padding: .25rem .5rem;
       }
     }
   }

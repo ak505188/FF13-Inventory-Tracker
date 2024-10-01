@@ -1,13 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { getComponentGilValue } from '../lib/items';
 
 export const inventorySlice = createSlice({
   name: 'inventory',
   initialState: {
-    value: []
+    value: [],
+    gil: 0,
   },
   reducers: {
     add: (state, action) => {
       state.value = addItem(state.value, action.payload.name, action.payload.amount);
+      state.gil = calcInventoryGilValue(state.value)
     },
     move: (state, action) => {
       const { from, to } = action.payload;
@@ -30,12 +33,15 @@ export const inventorySlice = createSlice({
     },
     remove: (state, action) => {
       state.value = removeItem(state.value, action.payload.name);
+      state.gil = calcInventoryGilValue(state.value)
     },
     reset: state => {
       state.value = [];
+      state.gil = 0;
     },
     subtract: (state, action) => {
       state.value = subtractItem(state.value, action.payload.name, action.payload.amount);
+      state.gil = calcInventoryGilValue(state.value)
     },
   }
 })
@@ -91,6 +97,17 @@ const removeItem = (inventory, name) => {
     null,
     ...inventory.slice(slot + 1)
   ]
+}
+
+const calcInventoryGilValue = (inventory) => {
+  const gil_value = inventory.reduce((gil, item) => {
+    if (item == null) return gil;
+    const { name, amount } = item;
+    const item_gil_value = getComponentGilValue(name) * amount;
+    if (item_gil_value) gil += item_gil_value
+    return gil;
+  }, 0)
+  return gil_value;
 }
 
 // Action creators are generated for each case reducer function
