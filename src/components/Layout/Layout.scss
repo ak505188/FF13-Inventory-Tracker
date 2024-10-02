@@ -22,6 +22,7 @@ div.app {
   height: 100%;
   gap: 1rem;
   padding: 1rem;
+  overflow: hidden;
 
   @media (max-width: 640px) {
     flex-direction: column;
@@ -44,6 +45,7 @@ button {
   flex-direction: column;
   padding: 1rem;
   flex: 1;
+  overflow: hidden;
 }
 
 [draggable="true"] {
