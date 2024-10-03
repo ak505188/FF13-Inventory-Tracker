@@ -1,11 +1,51 @@
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { TouchBackend } from 'react-dnd-touch-backend';
+import {
+  MultiBackend,
+  DndProvider,
+  TouchTransition,
+  MouseTransition,
+  Preview,
+} from 'react-dnd-multi-backend';
 import Button from '../Button';
+import InventoryItem from './InventoryItem';
+import InventoryItemPreview from './InventoryItemPreview';
 import { add, move, remove, reset as resetInventory, subtract } from '../../store/inventory';
 import { reset as resetChapter } from '../../store/chapter';
 import './Inventory.scss';
+
+// https://codesandbox.io/p/sandbox/dnd-i79zd?file=%2Fsrc%2FApp.js%3A33%2C1-44%2C3
+export const HTML5toTouch = {
+  backends: [
+    {
+      id: "html5",
+      backend: HTML5Backend,
+      transition: MouseTransition
+    },
+    {
+      id: "touch",
+      backend: TouchBackend,
+      options: { enableMouseEvents: true },
+      preview: true,
+      transition: TouchTransition
+    }
+  ]
+};
+
+export const generatePreview = (props) => {
+  const { item, style } = props;
+  const width = item.ref.current.getBoundingClientRect().width
+  const newStyle = {
+    ...style,
+    width: `${width}px`
+  };
+
+  return (
+    <InventoryItemPreview style={newStyle} item={item}/>
+  );
+};
 
 const Inventory = () => {
   const inventory = useSelector(state => state.inventory.value);
@@ -41,87 +81,13 @@ const Inventory = () => {
           </span>
         </h2>
       </header>
-      <DndProvider backend={HTML5Backend}>
+      <DndProvider backend={MultiBackend} options={HTML5toTouch}>
+        <Preview>{generatePreview}</Preview>
         <ol>
           {inventory.map((item, index) => renderItem(item, index))}
         </ol>
       </DndProvider>
     </div>
-  );
-}
-
-const InventoryItem = (props) => {
-  const { item, add, index, move, remove, subtract } = props;
-  const ref = useRef(null)
-
-  const [{ handlerId }, drop] = useDrop({
-    accept: 'INVENTORY_ITEM',
-    collect: (monitor) => {
-      return {
-        handlerId: monitor.getHandlerId()
-      }
-    },
-    hover: (item, monitor) => {
-      const dragIndex = item.index;
-      const hoverIndex = index;
-      if (!ref.current) return;
-
-      if (dragIndex === hoverIndex) return;
-
-      const hoverBoundingRect = ref.current?.getBoundingClientRect()
-
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-
-      const clientOffset = monitor.getClientOffset()
-
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top
-
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return
-      }
-
-      // Dragging upwards
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return
-      }
-
-      move({ from: dragIndex, to: hoverIndex })
-      item.index = hoverIndex;
-    }
-  })
-
-
-  const [style, drag] = useDrag(
-    () => ({
-      type: 'INVENTORY_ITEM',
-      item: {
-        ...item,
-        index
-      },
-      collect: (monitor) => ({
-        opacity: monitor.isDragging() ? 0.5 : 1,
-        cursor: monitor.isDragging() ? 'grabbing' : 'inherit'
-      })
-    }),
-  )
-
-  drag(drop(ref))
-  if (item == null) return (
-    <li
-      ref={ref}
-      style={{ style }}
-      draggable={true}
-      data-handler-id={handlerId}
-    > --- </li>
-  );
-
-  return (
-    <li ref={ref} style={{ style }} draggable={true} data-handler-id={handlerId}>
-      <span>{item.amount} {item.name}</span>
-      <Button onClick={add}>+</Button>
-      <Button onClick={subtract}>-</Button>
-      <Button onClick={remove}>x</Button>
-    </li>
   );
 }
 
