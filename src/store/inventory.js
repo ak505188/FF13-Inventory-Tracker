@@ -94,7 +94,6 @@ const cleanInventory = (inventory) => {
 }
 
 const moveItem = (inventory, from, to) => {
-  console.log(inventory);
   if (from > to) {
     return [
       ...inventory.slice(0, to),
