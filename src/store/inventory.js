@@ -15,21 +15,7 @@ export const inventorySlice = createSlice({
     move: (state, action) => {
       const { from, to } = action.payload;
       const inventory = state.value;
-      if (from > to) {
-        state.value = [
-          ...inventory.slice(0, to),
-          inventory[from],
-          ...inventory.slice(to, from),
-          ...inventory.slice(from + 1)
-        ];
-      } else if (from < to) {
-        state.value = [
-          ...inventory.slice(0, from),
-          ...inventory.slice(from + 1, to + 1),
-          inventory[from],
-          ...inventory.slice(to + 1)
-        ]
-      }
+      state.value = moveItem(inventory, from, to);
     },
     remove: (state, action) => {
       state.value = removeItem(state.value, action.payload.name);
@@ -92,11 +78,38 @@ const subtractItem = (inventory, name, amount = 1) => {
 
 const removeItem = (inventory, name) => {
   const slot = findItemSlot(inventory, name);
-  return [
+  return cleanInventory([
     ...inventory.slice(0, slot),
     null,
     ...inventory.slice(slot + 1)
-  ]
+  ])
+}
+
+const cleanInventory = (inventory) => {
+  while (inventory.length > 0 && inventory[inventory.length - 1] == null) {
+    inventory.pop();
+  }
+
+  return inventory;
+}
+
+const moveItem = (inventory, from, to) => {
+  console.log(inventory);
+  if (from > to) {
+    return [
+      ...inventory.slice(0, to),
+      inventory[from],
+      ...inventory.slice(to, from),
+      ...inventory.slice(from + 1)
+    ];
+  } else if (from < to) {
+    return [
+      ...inventory.slice(0, from),
+      ...inventory.slice(from + 1, to + 1),
+      inventory[from],
+      ...inventory.slice(to + 1)
+    ]
+  }
 }
 
 const calcInventoryGilValue = (inventory) => {
